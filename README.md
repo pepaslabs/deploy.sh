@@ -8,7 +8,7 @@ This is still a work-in-progress.  Best stay away for now.
 ## Bootstrapping
 
 ```
-wget -O - http://git.io/vCC7N | bash
+wget -O - http://git.io/bootstrap_deploy.sh | bash
 ```
 
-But first, you should have a look at what that script does: http://git.io/vCC7N
+But first, you should have a look at what that script does: http://git.io/bootstrap_deploy.sh
