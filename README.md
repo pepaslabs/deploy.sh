@@ -15,6 +15,5 @@ mkdir ~/git
 cd ~/git
 git clone https://github.com/pepaslabs/deploy.sh
 
-cd deploy.sh/bin
-./deploy.sh install recipes
+deploy.sh/bin/bootstrap.sh
 ```
