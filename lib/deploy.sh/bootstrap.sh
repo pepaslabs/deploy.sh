@@ -28,4 +28,4 @@ mkdir -p ~/github/pepaslabs
 cd ~/github/pepaslabs
 git clone https://github.com/pepaslabs/deploy.sh
 
-deploy.sh/bin/deploy.sh recipes
+deploy.sh/bin/deploy.sh install recipes
