@@ -24,7 +24,7 @@ then
     fi
 fi
 
-mkdir ~/github/pepaslabs
+mkdir -p ~/github/pepaslabs
 cd ~/github/pepaslabs
 git clone https://github.com/pepaslabs/deploy.sh
 
