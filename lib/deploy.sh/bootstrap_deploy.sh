@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# bootstrap.sh: install deploy.sh and fetch your recipes from github.
+# bootstrap_deploy.sh: install deploy.sh and fetch your recipes from github.
 # see https://github.com/pepaslabs/deploy.sh
 
 # status codes:
