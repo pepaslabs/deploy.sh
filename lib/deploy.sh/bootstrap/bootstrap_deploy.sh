@@ -28,4 +28,19 @@ mkdir -p ~/github/pepaslabs
 cd ~/github/pepaslabs
 git clone https://github.com/pepaslabs/deploy.sh
 
+read -p "Append PATH entry to ~/.bashrc? [Y/n]: " should_append_path
+case $should_append_path:
+y|Y|'')
+echo "Please source ~/.bashrc for PATH changes to take effect."
+cat >> ~/.bashrc << EOF
+
+# added by deploy.sh
+export PATH="${_dir}:${PATH}"
+EOF
+;;
+*)
+echo "NOT modifying ~/.bashrc"
+;;
+esac
+
 deploy.sh/bin/deploy.sh install recipes
