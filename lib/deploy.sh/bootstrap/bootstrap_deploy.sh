@@ -26,17 +26,24 @@ fi
 
 mkdir -p ~/github/pepaslabs
 cd ~/github/pepaslabs
-git clone https://github.com/pepaslabs/deploy.sh
+if [ ! -e "deploy.sh" ]
+then
+    git clone https://github.com/pepaslabs/deploy.sh
+fi
 
-read -p "Append PATH entry to ~/.bashrc? [Y/n]: " should_append_path
-case $should_append_path:
+mkdir -p ~/bin
+cd ~/bin
+ln -s ~/github/pepaslabs/deploy.sh/bin/deploy.sh .
+
+if ! which deploy.sh >/dev/null 2>&1
+then
+    
+read -p "Append PATH entry for ~/bin to ~/.bashrc? [Y/n]: " should_append_path
+case $should_append_path in
 y|Y|'')
 echo "Please source ~/.bashrc for PATH changes to take effect."
-bin_path="~/github/pepaslabs/deploy.sh/bin"
 cat >> ~/.bashrc << EOF
-
-# added by deploy.sh
-export PATH="${bin_path}:${PATH}"
+export PATH="~/bin:${PATH}"
 EOF
 ;;
 *)
@@ -44,4 +51,6 @@ echo "NOT modifying ~/.bashrc"
 ;;
 esac
 
-deploy.sh/bin/deploy.sh install recipes
+fi
+
+bash ~/github/pepaslabs/deploy.sh/bin/deploy.sh install recipes
