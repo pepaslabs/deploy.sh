@@ -32,8 +32,11 @@ then
 fi
 
 mkdir -p ~/bin
-cd ~/bin
-ln -s ~/github/pepaslabs/deploy.sh/bin/deploy.sh .
+if [ ! -e ~/bin/deploy.sh ]
+then
+    cd ~/bin
+    ln -s ~/github/pepaslabs/deploy.sh/bin/deploy.sh .
+fi
 
 if ! which deploy.sh >/dev/null 2>&1
 then

@@ -13,13 +13,20 @@ then
     account="cellularmitosis"
 fi
 
-mkdir -p ~/github/${account}/recipes
+
+mkdir -p ~/github/${account}
 cd ~/github/${account}
 
-git clone git@github.com:${account}/recipes
+if [ ! -e recipes ]
+then
+    git clone git@github.com:${account}/recipes
+fi
 
 cd ${_dir}/..
-ln -s -v ~/github/${account}/recipes .
+if [ ! -e recipes ]
+then
+    ln -s -v ~/github/${account}/recipes .
+fi
 
 ;;
 
