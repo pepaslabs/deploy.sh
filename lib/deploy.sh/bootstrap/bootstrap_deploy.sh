@@ -32,10 +32,11 @@ read -p "Append PATH entry to ~/.bashrc? [Y/n]: " should_append_path
 case $should_append_path:
 y|Y|'')
 echo "Please source ~/.bashrc for PATH changes to take effect."
+bin_path="~/github/pepaslabs/deploy.sh/bin"
 cat >> ~/.bashrc << EOF
 
 # added by deploy.sh
-export PATH="${_dir}:${PATH}"
+export PATH="${bin_path}:${PATH}"
 EOF
 ;;
 *)
