@@ -14,19 +14,22 @@ set -o errexit     # set -e : exit the script if any statement returns a non-tru
 shopt -s failglob  # if a glob doesn't expand, fail.
 
 # _script: the name of this script
-# _scriptdir: the directory which this script resides in
+# _dir: the directory which this script resides in
 # thanks to https://github.com/kvz/bash3boilerplate/blob/master/main.sh
 _script="$(basename "${BASH_SOURCE[0]}")"
 _dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export _dir
+
 _libpath="${_dir}/../lib/deploy.sh"
+export _libpath
 
 export PATH="${_dir}:${_libpath}:${PATH}"
 
 source bashx.bash
 export -f bashx
 
-default_recipes_path="${_dir}/recipes"
-recipes_path="${DEPLOY_RECIPES_PATH:-${default_recipes_path}}"
+recipes_path="${_dir}/../recipes"
+recipes_path="${DEPLOY_RECIPES_PATH:-${recipes_path}}"
 
 function usage()
 {
@@ -45,13 +48,28 @@ if [ -z "${1:-}" ]
 then
     usage_fatal
 fi
-_command="${1}"
+subcommand="${1}"
 
 
 if [ -z "${2:-}" ]
 then
     usage_fatal
 fi
-_recipe="${2}"
+recipe="${2}"
 
-bash ${recipes_path}/${recipe}
+if [ "${subcommand}" == "install" ]
+then
+    recipe_script_path="${recipes_path}/${recipe}/install.sh"
+    if [ ! -e "${recipe_script_path}" ]
+    then
+        recipe_script_path="${_dir}/../lib/deploy.sh/default_recipes/${recipe}/install.sh"
+        if [ ! -e "${recipe_script_path}" ]
+        then
+            echo "ERROR: couldn't find recipe: ${recipe}" >&2
+            exit 1
+        fi
+    fi
+
+    echo "Running ${recipe_script_path}"
+    bash -e -u -o pipefail "${recipe_script_path}"
+fi
