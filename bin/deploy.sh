@@ -54,4 +54,4 @@ then
 fi
 _recipe="${2}"
 
-
+bash ${recipes_path}/${recipe}
