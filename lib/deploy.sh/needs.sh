@@ -13,15 +13,6 @@ shopt -s failglob  # if a glob doesn't expand, fail.
 # thanks to http://unix.stackexchange.com/a/21929/136746
 use_x=`case "$-" in *x*) echo "-x" ;; esac`
 
-# _script: the name of this script
-# _scriptdir: the directory which this script resides in
-# thanks to https://github.com/kvz/bash3boilerplate/blob/master/main.sh
-_script="$(basename "${BASH_SOURCE[0]}")"
-_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-_libpath="${_dir}/../lib/deploy.sh"
-
-export PATH="${_dir}:${_libpath}:${PATH}"
-
 subcmd=${1}
 shift
 

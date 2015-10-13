@@ -13,28 +13,39 @@ set -o nounset     # set -u : exit the script if you try to use an uninitialised
 set -o errexit     # set -e : exit the script if any statement returns a non-true return value
 shopt -s failglob  # if a glob doesn't expand, fail.
 
-# _script: the name of this script
-# _dir: the directory which this script resides in
+# path introspection on this script
 # thanks to https://github.com/kvz/bash3boilerplate/blob/master/main.sh
-_script="$(basename "${BASH_SOURCE[0]}")"
-_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-export _dir
 
-_libpath="${_dir}/../lib/deploy.sh"
-export _libpath
+# _script_path: canonicalized full path to this script
+_script_path="$( readlink -e "${BASH_SOURCE[0]}")"
 
-export PATH="${_dir}:${_libpath}:${PATH}"
+# _script_name: the name of this script
+_script_name="$(basename "${_script_path}")"
 
-source bashx.bash
+# _script_dir: the directory which this script resides in
+_script_dir="$(dirname "${_script_path}")"
+
+deploysh_base_dir="$( readlink -e "${_script_dir}/.." )"
+export deploysh_base_dir
+
+deploysh_bin_dir="${deploysh_base_dir}/bin"
+export deploysh_bin_dir
+
+deploysh_lib_dir="${deploysh_base_dir}/lib/deploy.sh"
+export deploysh_lib_dir
+
+export PATH="${deploysh_bin_dir}:${deploysh_lib_dir}:${PATH}"
+
+source "${deploysh_lib_dir}/bashx.bash"
 export -f bashx
 
-recipes_path="${_dir}/../recipes"
-recipes_path="${DEPLOY_RECIPES_PATH:-${recipes_path}}"
+recipes_dir="${deploysh_base_dir}/recipes"
+recipes_dir="${DEPLOYSH_RECIPES_DIR:-${recipes_dir}}"
 
 function usage()
 {
     cat << EOF
-Usage: ${_script} {install|remove} <recipe>
+Usage: ${_script_name} {install|remove} <recipe>
 EOF
 }
 
@@ -50,7 +61,6 @@ then
 fi
 subcommand="${1}"
 
-
 if [ -z "${2:-}" ]
 then
     usage_fatal
@@ -62,7 +72,7 @@ then
     recipe_script_path="${recipes_path}/${recipe}/install.sh"
     if [ ! -e "${recipe_script_path}" ]
     then
-        recipe_script_path="${_dir}/../lib/deploy.sh/default_recipes/${recipe}/install.sh"
+        recipe_script_path="${deploysh_lib_dir}/default_recipes/${recipe}/install.sh"
         if [ ! -e "${recipe_script_path}" ]
         then
             echo "ERROR: couldn't find recipe: ${recipe}" >&2
