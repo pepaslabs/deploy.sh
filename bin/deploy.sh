@@ -39,8 +39,7 @@ export PATH="${deploysh_bin_dir}:${deploysh_lib_dir}:${PATH}"
 source "${deploysh_lib_dir}/bashx.bash"
 export -f bashx
 
-recipes_dir="${deploysh_base_dir}/recipes"
-recipes_dir="${DEPLOYSH_RECIPES_DIR:-${recipes_dir}}"
+recipes_dir="${DEPLOYSH_RECIPES_DIR:-${deploysh_base_dir}/recipes}"
 
 function usage()
 {
@@ -69,7 +68,7 @@ recipe="${2}"
 
 if [ "${subcommand}" == "install" ]
 then
-    recipe_script_path="${recipes_path}/${recipe}/install.sh"
+    recipe_script_path="${recipes_dir}/${recipe}/install.sh"
     if [ ! -e "${recipe_script_path}" ]
     then
         recipe_script_path="${deploysh_lib_dir}/default_recipes/${recipe}/install.sh"
