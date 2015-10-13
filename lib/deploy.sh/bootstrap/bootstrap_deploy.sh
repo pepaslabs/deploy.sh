@@ -15,7 +15,7 @@ echo2()
 
 prompt_to_proceed()
 {
-    local message="$1"
+    local message="${1}"
 
     read -p "${message} [Y/n]: " yn
     case $yn in
@@ -37,7 +37,7 @@ then
         else
             install_git_command="sudo apt-get install git"
         fi
-        prompt_to_continue "About to '${install_git_command}'.  Proceed? [Y/n]: "
+        prompt_to_proceed "About to '${install_git_command}'.  Proceed?"
         eval "${install_git_command}"
     else
         echo2 "ERROR: please install git."
