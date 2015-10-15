@@ -33,9 +33,9 @@ then
     then
         if [ "$(whoami)" == "root" ]
         then
-            install_git_command="apt-get install git"
+            install_git_command="apt-get --yes install git"
         else
-            install_git_command="sudo apt-get install git"
+            install_git_command="sudo apt-get --yes install git"
         fi
         prompt_to_proceed "About to '${install_git_command}'.  Proceed?"
         eval "${install_git_command}"
