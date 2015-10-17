@@ -46,6 +46,7 @@ case $use_github in
         cd "${deploysh_etc_dir}/recipes.d"
         if [ ! -e "${repo_name}" ]
         then
+            echo "Symlinking ${repo_name} into recipes.d."
             ln -s -v ~/github/${account}/${repo_name} .
         fi
 
