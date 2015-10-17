@@ -6,4 +6,4 @@ needs.sh apt votca-csg-tutorials
 
 # remove it so the test is still useful next time
 echo_step "Removing ${color_yellow}votca-csg-tutorials${color_off}."
-apt-get remove votca-csg-tutorials
+apt-get --yes remove votca-csg-tutorials
