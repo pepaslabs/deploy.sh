@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# myrecipes/install.sh: interactively help a user install their recipe
+# collection from github.
+
 env
 exit 0
 
