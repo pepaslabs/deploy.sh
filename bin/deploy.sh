@@ -3,6 +3,7 @@
 # deploy.sh: configuration management, written in bash.
 # see https://github.com/pepaslabs/deploy.sh
 
+
 # env vars
 
 # this script's behavior is modified by the following env vars:
@@ -32,7 +33,7 @@ shopt -s failglob  # if a glob doesn't expand, fail.
 
 # honor verbosity recursively
 # thanks to http://unix.stackexchange.com/a/21929/136746
-use_x=`case "$-" in *x*) echo "-x" ;; esac`
+use_x="$( case "$-" in *x*) echo "-x" ;; esac )"
 
 
 # path introspection on this script
