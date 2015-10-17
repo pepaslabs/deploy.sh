@@ -116,19 +116,28 @@ resolved_recipes_dir="$( basename "$( dirname "${recipe_dir}" )" )"
 
 function recipes_dirs()
 {
-    find -L "${recipesd_dir}" -mindepth 1 -maxdepth 1 -type d -not -path '*/\.*'
+    find -L "${recipesd_dir}" \
+    -mindepth 1 -maxdepth 1 -type d \
+    -not -path '*/\.*'
 }
 
 function nondefault_recipes_dirs()
 {
-    find -L "${recipesd_dir}" -mindepth 1 -maxdepth 1 -type d -not -path '*/\.*' -not -name 'zz_default_recipes'
+    find -L "${recipesd_dir}" \
+    -mindepth 1 -maxdepth 1 -type d \
+    -not -path '*/\.*' \
+    -not -name 'zz_default_recipes' \
+    -not -name 'zzz_test_recipes'
 }
 
-printed_recipes_dir="${resolved_recipes_dir}/"
-if [ "$( nondefault_recipes_dirs | wc -l )" -eq 1 ]
+printed_recipes_dir=""
+if [ "${resolved_recipes_dir}" == "zz_default_recipes" \
+     -o "${resolved_recipes_dir}" == "zzz_test_recipes" \
+     -o "$( nondefault_recipes_dirs | wc -l )" -gt 1 ]
 then
-    # if the user has only installed one recipes dir in recipes.d, don't bother printing it.
-    printed_recipes_dir=""
+    # if the user has installed more than one recipes dir in recipes.d,
+    # of if the user is running a default or test recipe, print the recipes dir.
+    printed_recipes_dir="${resolved_recipes_dir}/"
 fi
 
 
