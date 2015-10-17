@@ -142,7 +142,7 @@ function resolved_recipe_dir()
 recipe_dir="$( resolved_recipe_dir )"
 if [ ! -e "${recipe_dir}" ]
 then
-    echo_step_error "No such recipe: ${recipe}"
+    echo_step_error "No such recipe: ${color_yellow}${recipe}${color_off}"
     exit $deploy_err_no_such_recipe
 fi
 resolved_recipes_dir="$( basename "$( dirname "${recipe_dir}" )" )"
@@ -170,7 +170,7 @@ fi
 subcommand_fpath="${recipe_dir}/${subcommand}.sh"
 if [ ! -e "${subcommand_fpath}" ]
 then
-    echo_step_error "No such subcommand: ${recipe}/${subcommand}.sh"
+    echo_step_error "No such subcommand: ${recipe}/${color_yellow}${subcommand}.sh${color_off}"
     exit $deploy_err_no_such_subcommand
 fi
 

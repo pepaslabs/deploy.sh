@@ -62,4 +62,5 @@ else
     color_purple="${color_none}"
     color_cyan="${color_none}"
     color_white="${color_none}"
+    color_off=''
 fi
