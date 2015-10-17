@@ -54,50 +54,17 @@ PATH="${deploysh_bin_dir}:${deploysh_lib_dir}:${PATH}"
 
 recipesd_dir="${DEPLOYSH_RECIPESD_DIR:-${deploysh_etc_dir}/recipes.d}"
 
+color_scheme="${DEPLOYSH_COLOR_SCHEME:-"white_on_black"}"
+
+echo_step_component="deploy.sh"
+
 
 # import bash libs
 
 source "${deploysh_lib_dir}/exit_codes.bash"
 source "${deploysh_lib_dir}/bashx.bash"
-
-color_scheme="${DEPLOYSH_COLOR_SCHEME:-"white_on_black"}"
 source "${deploysh_lib_dir}/colors.bash"
-
-
-# terminal output functions
-
-echo_step_component="deploy.sh"
-
-function echo2()
-{
-    echo "${@}" >&2
-}
-
-function echo_step()
-{
-    echo_step_color "${color_cyan}" "${@}"
-}
-
-function echo_step_color()
-{
-    local color="${1}" ; shift
-    echo -e "${color} * ${echo_step_component}: ${color_off}${@}"
-}
-
-function echo_step_ok()
-{
-    echo -e "${color_green} * OK (${echo_step_component}): ${color_off}${@}" >&2
-}
-
-function echo_step_warning()
-{
-    echo -e "${color_yellow} * WARNING (${echo_step_component}): ${color_off}${@}" >&2
-}
-
-function echo_step_error()
-{
-    echo -e "${color_red} * ERROR (${echo_step_component}): ${color_off}${@}" >&2
-}
+source "${deploysh_lib_dir}/echo_step.bash"
 
 
 # usage functions
