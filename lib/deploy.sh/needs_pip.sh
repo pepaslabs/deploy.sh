@@ -22,17 +22,12 @@ needs.sh apt python-pip
 
 for pkg in "${@}"
 do
-    if ! pip_pkg_is_installed.sh "${pkg}"
-    then
-        echo_step "Installing ${color_yellow}${pkg}${color_off}"
-        pip install "${pkg}" || \
-        (
-        	exit_status=$?
-    		echo_step_error "${color_yellow}pip install ${pkg}${color_off} exited status $exit_status."
-    		exit $exit_status
-        )
-        echo_step_ok "${color_yellow}${pkg}${color_off} installed."
-    else
-        echo_step "Skipping ${color_yellow}${pkg}${color_off} (already installed)."
-    fi
+    echo_step "Installing ${color_yellow}${pkg}${color_off}"
+    pip install "${pkg}" || \
+    (
+        exit_status=$?
+        echo_step_error "${color_yellow}pip install ${pkg}${color_off} exited status $exit_status."
+        exit $exit_status
+    )
+    echo_step_ok "${color_yellow}${pkg}${color_off} installed."
 done
