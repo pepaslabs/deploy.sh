@@ -114,7 +114,7 @@ function resolved_recipe_dir()
 recipe_dir="$( resolved_recipe_dir )"
 if [ ! -e "${recipe_dir}" ]
 then
-    echo_step_error "No such recipe: ${color_yellow}${recipe}${color_off}"
+    echo_step_error "No such recipe: ${color_yellow}${recipe}${color_off}."
     exit $deploy_err_no_such_recipe
 fi
 resolved_recipes_dir="$( basename "$( dirname "${recipe_dir}" )" )"
@@ -151,7 +151,7 @@ fi
 subcommand_fpath="${recipe_dir}/${subcommand}.sh"
 if [ ! -e "${subcommand_fpath}" ]
 then
-    echo_step_error "No such subcommand: ${recipe}/${color_yellow}${subcommand}.sh${color_off}"
+    echo_step_error "No such subcommand: ${recipe}/${color_yellow}${subcommand}.sh${color_off}."
     exit $deploy_err_no_such_subcommand
 fi
 
@@ -168,12 +168,12 @@ export -f echo2 echo_step echo_step_color echo_step_ok echo_step_warning echo_st
 
 # run the script
 
-echo_step "Running ${printed_recipes_dir}${color_yellow}${recipe}${color_off}/${subcommand}.sh"
+echo_step "Running ${printed_recipes_dir}${color_yellow}${recipe}${color_off}/${subcommand}.sh."
 bash_opts="-eu -o pipefail ${use_x}"
 echo_step_component="${recipe}/${subcommand}" bash ${bash_opts} "${subcommand_fpath}" || \
 (
     exit_status=$?
-    echo_step_error "${printed_recipes_dir}${color_yellow}${recipe}${color_off}/${subcommand}.sh exited status $exit_status"
+    echo_step_error "${printed_recipes_dir}${color_yellow}${recipe}${color_off}/${subcommand}.sh exited status $exit_status."
     exit $exit_status
 )
 
