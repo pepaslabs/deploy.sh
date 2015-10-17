@@ -32,6 +32,6 @@ do
         )
         echo_step_ok "${color_yellow}${pkg}%{color_off} installed."
     else
-        echo_step "${color_yellow}${pkg}%{color_off} already installed."
+        echo_step "${color_yellow}${pkg}${color_off} already installed."
     fi
 done
