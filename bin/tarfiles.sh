@@ -54,6 +54,7 @@ source "${deploysh_lib_dir}/bashx.bash"
 source "${deploysh_lib_dir}/colors.bash"
 source "${deploysh_lib_dir}/echo_step.bash"
 source "${deploysh_lib_dir}/mktemp.bash"
+source "${deploysh_lib_dir}/prompt.bash"
 
 
 # volatiles: support for cleaning up mktemp files and dirs on exit automatically 
@@ -125,34 +126,6 @@ subcommand="${1}"
 
 
 # main:
-
-prompt_Yn()
-{
-    local message="${1}"
-
-    echo -e -n "${color_yellow} * PROMPT (${echo_step_component}): ${color_off}${@} [Y/n]: " >&2
-
-    read yn
-    case $yn in
-        y|Y|yes|Yes|YES|'') return 0 ;;
-        *) return 1 ;;
-    esac
-    # thanks to http://stackoverflow.com/a/226724
-}
-
-prompt_yN()
-{
-    local message="${1}"
-
-    echo -e -n "${color_yellow} * PROMPT (${echo_step_component}): ${color_off}${@} [y/N]: " >&2
-
-    read yn
-    case $yn in
-        y|Y|yes|Yes|YES) return 0 ;;
-        *) return 1 ;;
-    esac
-    # thanks to http://stackoverflow.com/a/226724
-}
 
 if [ "${subcommand}" == "edit" ]
 then
