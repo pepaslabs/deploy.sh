@@ -1,13 +1,35 @@
 #!/usr/bin/env bash
 
-set -eu -o pipefail
+# needs_apt.sh: subcommand of needs.sh
+# see https://github.com/pepaslabs/deploy.sh
+
+
+# "strict" mode
+# thanks to http://stackoverflow.com/a/13099228
+# thanks to https://sipb.mit.edu/doc/safe-shell/
+set -o pipefail    # trace ERR through pipes
+set -o errtrace    # trace ERR through 'time command' and other functions
+set -o nounset     # set -u : exit the script if you try to use an uninitialised variable
+set -o errexit     # set -e : exit the script if any statement returns a non-true return value
+shopt -s failglob  # if a glob doesn't expand, fail.
+
+
+source "${deploysh_lib_dir}/exit_codes.bash"
 
 echo_step_component=needs/apt
 
-for PKG in "${@}"
+
+for pkg in "${@}"
 do
-    if ! apt_pkg_is_installed.sh $PKG
+    if ! apt_pkg_is_installed.sh "${pkg}"
     then
-        apt-get --yes install $PKG
+        echo_step "Installing ${pkg}"
+        apt-get --yes install "${pkg}" || \
+        (
+        	exit_status=$?
+    		echo_step_error "${color_yellow}apt-get install ${pkg}${color_off} exited status $exit_status."
+    		exit $exit_status
+        )
+        echo_step_ok "${pkg} installed."
     fi
 done
