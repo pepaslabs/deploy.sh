@@ -93,6 +93,7 @@ fi
 
 # adjust PATH
 
+remind_bashrc_at_end=0
 if ! which deploy.sh >/dev/null 2>&1
 then
     if prompt_Yn "Add ~/bin to PATH in ~/.bashrc?"
@@ -103,6 +104,7 @@ then
 # added by deploy.sh
 export PATH="~/bin:${PATH}"
 EOF
+        remind_bashrc_at_end=1
     else
         echo " * NOT modifying ~/.bashrc"
     fi
@@ -116,6 +118,11 @@ if prompt_Yn "About to '${install_myrecipes_command}'.  Proceed?"
 then
     echo " * Running '${install_myrecipes_command}'."
     bash ~/github/pepaslabs/deploy.sh/bin/deploy.sh install myrecipes
+
+    if [ "${remind_bashrc_at_end}" -eq 1 ]
+    then
+        echo " * NOTE: Remember to source ~/.bashrc for PATH changes to take effect."
+    fi
 else
     echo2 "Exiting..."
     exit $err_user_cancelled
