@@ -17,7 +17,7 @@ shopt -s failglob  # if a glob doesn't expand, fail.
 
 # honor verbosity recursively
 # thanks to http://unix.stackexchange.com/a/21929/136746
-use_x="$( case "$-" in *x*) echo "-x" ;; esac )"
+use_x=`case "$-" in *x*) echo "-x" ;; esac`
 
 
 # path introspection on this script
@@ -92,6 +92,7 @@ function cleanup_volatiles()
 
 function cleanup_at_exit()
 {
+    echo_step_component="tarfiles.sh"
     cleanup_volatiles
 }
 trap cleanup_at_exit EXIT
@@ -125,8 +126,37 @@ subcommand="${1}"
 
 # main:
 
+prompt_Yn()
+{
+    local message="${1}"
+
+    echo -e -n "${color_yellow} * PROMPT (${echo_step_component}): ${color_off}${@} [Y/n]: " >&2
+
+    read yn
+    case $yn in
+        y|Y|yes|Yes|YES|'') return 0 ;;
+        *) return 1 ;;
+    esac
+    # thanks to http://stackoverflow.com/a/226724
+}
+
+prompt_yN()
+{
+    local message="${1}"
+
+    echo -e -n "${color_yellow} * PROMPT (${echo_step_component}): ${color_off}${@} [y/N]: " >&2
+
+    read yn
+    case $yn in
+        y|Y|yes|Yes|YES) return 0 ;;
+        *) return 1 ;;
+    esac
+    # thanks to http://stackoverflow.com/a/226724
+}
+
 if [ "${subcommand}" == "edit" ]
 then
+    echo_step_component="tarfiles/edit"
 
     workdir=$(mktempdir)
     add_volatile "${workdir}"
@@ -137,30 +167,39 @@ then
     cat "${files_fpath}" | tar xv
 
     echo_step "Starting a ${color_yellow}subshell${color_off} in ${color_yellow}${workdir}${color_off}."
-    echo_step "To ${color_yellow}save${color_off} your changes, type '${color_yellow}exit${color_off}' or hit ${color_yellow}CTRL+d${color_off}."
-    echo_step "To ${color_yellow}cancel${color_off} (and ${color_red}discard${color_off} changes), type '${color_yellow}exit 1${color_off}'."
-    bash -l || \
-    (
+    echo_step "When finished making changes, Hit ${color_yellow}CTRL+d${color_off} to exit the subshell."
+
+    bash -l || true
+
+    if prompt_Yn "Save changes?"
+    then
+        echo_step "Repacking ${color_yellow}files.tar${color_off}."
+        newtarball=$(mktempfile)
+        add_volatile "${newtarball}"
+        tar cf "${newtarball}" .
+        cd - >/dev/null
+        cp "${newtarball}" files.tar
+        echo_step_ok "Changes saved."
+    else
         echo_step_warning "Cancelling and ${color_red}discarding${color_off} changes."
         exit $tarfiles_err_user_cancelled
-    )
-
-    echo_step "Repacking ${color_yellow}files.tar${color_off}."
-    newtarball=$(mktempfile)
-    add_volatile "${newtarball}"
-    tar cf "${newtarball}" .
-    cd - >/dev/null
-    cp "${newtarball}" files.tar
-    echo_step_ok "Changes saved."
+    fi
 
 elif [ "${subcommand}" == "pull" ]
 then
+    echo_step_component="tarfiles/pull"
+
     echo_step_error "Subcommand '${color_yellow}pull${color_off}' Not implemented yet."
+
 elif [ "${subcommand}" == "check" ]
 then
+    echo_step_component="tarfiles/check"
+
     echo_step_error "Subcommand '${color_yellow}check${color_off}' Not implemented yet."
 elif [ "${subcommand}" == "diff" ]
 then
+    echo_step_component="tarfiles/diff"
+
     echo_step_error "Subcommand '${color_yellow}diff${color_off}' Not implemented yet."
 
     workdir=$(mktempdir)
@@ -171,7 +210,7 @@ then
     cd "${workdir}"
     cat "${files_fpath}" | tar xv
 
-FIXME left off here.  this isn't working.  it tries to compare against all of /.
+#FIXME left off here.  this isn't working.  it tries to compare against all of /.
     diff -urN $( find . ) --to-file=/
 
 else
