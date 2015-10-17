@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # needs.sh: subcommand of deploy.sh
 # see https://github.com/pepaslabs/deploy.sh
@@ -13,9 +13,6 @@ set -o nounset     # set -u : exit the script if you try to use an uninitialised
 set -o errexit     # set -e : exit the script if any statement returns a non-true return value
 shopt -s failglob  # if a glob doesn't expand, fail.
 
-# honor verbosity recursively
-# thanks to http://unix.stackexchange.com/a/21929/136746
-use_x=`case "$-" in *x*) echo "-x" ;; esac`
 
 source "${deploysh_lib_dir}/exit_codes.bash"
 
@@ -27,8 +24,14 @@ shift
 needs_subcmd_fpath="${deploysh_lib_dir}/needs_${needs_subcmd}.sh"
 if [ ! -e "${needs_subcmd_fpath}" ]
 then
-    echo_step_error "No such subcommand: needs_${needs_subcmd}.sh"
+    echo_step_error "No such subcommand: ${color_yellow}needs_${needs_subcmd}.sh${color_off}"
     exit $needs_err_no_such_subcommand
 fi
 
-bash ${use_x} "${needs_subcmd_fpath}" "${@}"
+bash_opts="-eu -o pipefail ${use_x}"
+echo_step_component="needs/${needs_subcmd}" bash ${bash_opts} "${needs_subcmd_fpath}" "${@}" || \
+(
+    exit_status=$?
+    echo_step_error "${color_yellow}needs_${needs_subcmd}.sh${color_off} exited status $exit_status"
+    exit $exit_status
+)

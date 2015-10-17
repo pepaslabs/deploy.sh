@@ -1,0 +1,1 @@
+needs.sh nonexisting_subcommand ignored_package
