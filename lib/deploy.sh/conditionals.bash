@@ -1,7 +1,7 @@
-# conditions.bash
+# conditionals.bash: functions to be used in bash "if" statements.
+# see https://github.com/pepaslabs/deploy.sh
 #
-# this library of functions are intended to be used in bash "if" statements.
-# e.g.:
+# usage:
 #
 #     if ! is_root ; then echo "you aren't root" ; fi
 #
@@ -13,6 +13,11 @@
 function is_root()
 {
     [ "$( whoami )" == "root" ]
+}
+
+function is_user()
+{
+    [ "$( whoami )" != "root" ]
 }
 
 
@@ -36,10 +41,30 @@ function is_debian()
 }
 
 
-# 
+# command-related functions
 
 function has_cmd()
 {
 	local cmd="${1}"
 	which "${cmd}" >/dev/null 2>&1
 }
+
+
+# file-related functions
+
+function files_differ()
+{
+    local a="${1}"
+    local b="${2}"
+
+    if [ ! -e "${a}" ] ; then exit 117 ; fi
+    if [ ! -e "${b}" ] ; then return 0 ; fi
+
+    if diff "${a}" "${b}" >/dev/null 2>&1
+    then
+        return 1
+    else
+        return 0
+    fi
+}
+

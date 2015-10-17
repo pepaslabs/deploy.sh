@@ -66,6 +66,7 @@ source "${deploysh_lib_dir}/exit_codes.bash"
 source "${deploysh_lib_dir}/bashx.bash"
 source "${deploysh_lib_dir}/colors.bash"
 source "${deploysh_lib_dir}/echo_step.bash"
+source "${deploysh_lib_dir}/conditionals.bash"
 
 
 # usage functions
@@ -160,6 +161,7 @@ export use_x
 export -f bashx
 export color_off color_none color_black color_red color_green color_yellow color_blue color_purple color_cyan color_white
 export -f echo2 echo_step echo_step_color echo_step_ok echo_step_warning echo_step_error
+export -f is_root is_user is_linux is_darwin is_debian has_cmd files_differ
 
 
 # run the script
