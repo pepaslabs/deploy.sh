@@ -72,7 +72,7 @@ cd ~/github/pepaslabs
 if [ ! -e "deploy.sh" ]
 then
     git_clone_command='git clone https://github.com/pepaslabs/deploy.sh'
-    if prompt_Yn "About to '${git_clone_command}'.  Proceed?"
+    if prompt_Yn "About to clone github.com/pepaslabs/deploy.sh.  Proceed?"
     then
         echo " * Running '${git_clone_command}'."
         eval "${git_clone_command}"
