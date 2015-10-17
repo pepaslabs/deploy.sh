@@ -24,7 +24,7 @@ do
     if ! apt_pkg_is_installed.sh "${pkg}"
     then
         echo_step "Installing ${color_yellow}${pkg}${color_off}"
-        apt-get --yes install "${pkg}" || \
+        apt-get install "${pkg}" || \
         (
         	exit_status=$?
     		echo_step_error "${color_yellow}apt-get install ${pkg}${color_off} exited status $exit_status."
