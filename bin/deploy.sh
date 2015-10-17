@@ -31,11 +31,6 @@ set -o errexit     # set -e : exit the script if any statement returns a non-tru
 shopt -s failglob  # if a glob doesn't expand, fail.
 
 
-# honor verbosity recursively
-# thanks to http://unix.stackexchange.com/a/21929/136746
-use_x="$( case "$-" in *x*) echo "-x" ;; esac )"
-
-
 # path introspection on this script
 # thanks to https://github.com/kvz/bash3boilerplate/blob/master/main.sh
 
@@ -171,7 +166,7 @@ export -f echo2 echo_step echo_step_color echo_step_ok echo_step_warning echo_st
 
 echo_step "Running ${printed_recipes_dir}${color_yellow}${recipe}${color_off}/${subcommand}.sh."
 bash_opts="-eu -o pipefail ${use_x}"
-echo_step_component="${recipe}/${subcommand}" bash ${bash_opts} "${subcommand_fpath}" || \
+echo_step_component="${recipe}/${subcommand}" bashx ${bash_opts} "${subcommand_fpath}" || \
 (
     exit_status=$?
     echo_step_error "${printed_recipes_dir}${color_yellow}${recipe}${color_off}/${subcommand}.sh exited status $exit_status."

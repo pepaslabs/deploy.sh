@@ -15,11 +15,6 @@ set -o errexit     # set -e : exit the script if any statement returns a non-tru
 shopt -s failglob  # if a glob doesn't expand, fail.
 
 
-# honor verbosity recursively
-# thanks to http://unix.stackexchange.com/a/21929/136746
-use_x=`case "$-" in *x*) echo "-x" ;; esac`
-
-
 # path introspection on this script
 # thanks to https://github.com/kvz/bash3boilerplate/blob/master/main.sh
 

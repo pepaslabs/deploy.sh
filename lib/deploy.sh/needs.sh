@@ -28,8 +28,8 @@ then
     exit $needs_err_no_such_subcommand
 fi
 
-bash_opts="-eu -o pipefail ${use_x}"
-echo_step_component="needs/${needs_subcmd}" bash ${bash_opts} "${needs_subcmd_fpath}" "${@}" || \
+bash_opts="-eu -o pipefail"
+echo_step_component="needs/${needs_subcmd}" bashx ${bash_opts} "${needs_subcmd_fpath}" "${@}" || \
 (
     exit_status=$?
     echo_step_error "${color_yellow}needs_${needs_subcmd}.sh${color_off} exited status $exit_status."
