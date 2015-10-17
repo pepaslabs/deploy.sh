@@ -166,7 +166,7 @@ export -f is_root is_user is_linux is_darwin is_debian has_cmd files_differ
 # run the script
 
 echo_step "Running ${printed_recipes_dir}${color_yellow}${recipe}${color_off}/${subcommand}.sh."
-bash_opts="-eu -o pipefail ${use_x}"
+bash_opts="-eu -o pipefail"
 echo_step_component="${recipe}/${subcommand}" bashx ${bash_opts} "${subcommand_fpath}" || \
 (
     exit_status=$?
