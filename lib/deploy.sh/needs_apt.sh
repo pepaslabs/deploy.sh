@@ -23,7 +23,7 @@ for pkg in "${@}"
 do
     if ! apt_pkg_is_installed.sh "${pkg}"
     then
-        echo_step "Installing ${pkg}"
+        echo_step "Installing ${color_yellow}${pkg}${color_off}"
         apt-get --yes install "${pkg}" || \
         (
         	exit_status=$?
