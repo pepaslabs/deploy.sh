@@ -157,7 +157,6 @@ fi
 
 export PATH
 export deploysh_base_dir deploysh_bin_dir deploysh_lib_dir deploysh_etc_dir
-export use_x
 export -f bashx
 export color_off color_none color_black color_red color_green color_yellow color_blue color_purple color_cyan color_white
 export -f echo2 echo_step echo_step_color echo_step_ok echo_step_warning echo_step_error
