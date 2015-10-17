@@ -6,3 +6,4 @@ deploy_err_no_such_recipe=4
 deploy_err_no_such_subcommand=5
 
 needs_err_no_such_subcommand=10
+needs_not_implemented_yet=11
