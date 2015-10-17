@@ -24,7 +24,7 @@ shift
 needs_subcmd_fpath="${deploysh_lib_dir}/needs_${needs_subcmd}.sh"
 if [ ! -e "${needs_subcmd_fpath}" ]
 then
-    echo_step_error "No such subcommand: ${color_yellow}needs_${needs_subcmd}.sh${color_off}"
+    echo_step_error "No such subcommand: ${color_yellow}needs_${needs_subcmd}.sh${color_off}."
     exit $needs_err_no_such_subcommand
 fi
 
@@ -32,6 +32,6 @@ bash_opts="-eu -o pipefail ${use_x}"
 echo_step_component="needs/${needs_subcmd}" bash ${bash_opts} "${needs_subcmd_fpath}" "${@}" || \
 (
     exit_status=$?
-    echo_step_error "${color_yellow}needs_${needs_subcmd}.sh${color_off} exited status $exit_status"
+    echo_step_error "${color_yellow}needs_${needs_subcmd}.sh${color_off} exited status $exit_status."
     exit $exit_status
 )
