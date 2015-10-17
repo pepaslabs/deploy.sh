@@ -30,7 +30,7 @@ do
     		echo_step_error "${color_yellow}apt-get install ${pkg}${color_off} exited status $exit_status."
     		exit $exit_status
         )
-        echo_step_ok "${color_yellow}${pkg}%{color_off} installed."
+        echo_step_ok "${color_yellow}${pkg}${color_off} installed."
     else
         echo_step "Skipping ${color_yellow}${pkg}${color_off} (already installed)."
     fi
