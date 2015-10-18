@@ -97,6 +97,11 @@ function is_pogoplug_v4()
 
 function is_virtualbox()
 {
+    if ! has_cmd virt-what
+    then
+        needs.sh apt virt-what
+    fi
+
     virt-what | grep -q virtualbox
 }
 
