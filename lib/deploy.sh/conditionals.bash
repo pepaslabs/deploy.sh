@@ -97,7 +97,7 @@ function is_pogoplug_v4()
 
 function is_virtualbox()
 {
-    is_root || ( echo_step_component="conditionals.bash/is_virtualbox" die_x_for_y_only "function" "root" )
+    is_root || echo_step_component="conditionals.bash/is_virtualbox" die_x_for_y_only "function" "root"
 
     if [ ! -e /usr/sbin/virt-what ]
     then
