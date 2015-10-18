@@ -68,3 +68,10 @@ function files_differ()
     fi
 }
 
+
+# hardware-related functions
+
+function is_nslu2()
+{
+    cat /proc/cpuinfo | grep -q 'Linksys NSLU2'
+}
