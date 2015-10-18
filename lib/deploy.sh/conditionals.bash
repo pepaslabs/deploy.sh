@@ -35,9 +35,9 @@ function is_darwin()
 
 function is_debian()
 {
-	[ -e /etc/debian_version ]
-	# see also http://unix.stackexchange.com/questions/29981/how-can-i-tell-whether-a-build-is-debian-based
-	# see also http://stackoverflow.com/questions/394230/detect-the-os-from-a-bash-script/3792848#3792848
+    [ -e /etc/debian_version ]
+    # see also http://unix.stackexchange.com/questions/29981/how-can-i-tell-whether-a-build-is-debian-based
+    # see also http://stackoverflow.com/questions/394230/detect-the-os-from-a-bash-script/3792848#3792848
 }
 
 
