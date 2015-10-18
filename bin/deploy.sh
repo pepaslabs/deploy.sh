@@ -159,10 +159,14 @@ fi
 export PATH
 export deploysh_base_dir deploysh_bin_dir deploysh_lib_dir deploysh_etc_dir
 export -f bashx
-export color_off color_none color_black color_red color_green color_yellow color_blue color_purple color_cyan color_white
-export -f echo2 echo_step echo_step_color echo_step_ok echo_step_warning echo_step_error
-export -f is_root is_user is_linux is_darwin is_debian has_cmd files_differ
-export -f die_for_x_only root_or_die user_or_die linux_or_die darwin_or_die debian_or_die
+export color_off color_none color_black color_red color_green color_yellow \
+color_blue color_purple color_cyan color_white
+export -f echo2 echo_step echo_step_color echo_step_ok echo_step_warning \
+echo_step_error
+export -f is_root is_user is_linux is_darwin is_debian has_cmd files_differ \
+is_nslu2
+export -f die_for_x_only root_or_die user_or_die linux_or_die darwin_or_die \
+debian_or_die
 
 
 # run the script
