@@ -45,8 +45,8 @@ function is_debian()
 
 function has_cmd()
 {
-	local cmd="${1}"
-	which "${cmd}" >/dev/null 2>&1
+    local cmd="${1}"
+    which "${cmd}" >/dev/null 2>&1
 }
 
 
@@ -97,9 +97,14 @@ function is_pogoplug_v4()
 
 function is_virtualbox()
 {
-    if ! has_cmd virt-what
+    if [ ! -e /usr/sbin/virt-what ]
     then
         needs.sh apt virt-what
+    fi
+    
+    if ! has_cmd virt-what
+    then
+        export PATH="${PATH}:/usr/sbin"
     fi
 
     virt-what | grep -q virtualbox
