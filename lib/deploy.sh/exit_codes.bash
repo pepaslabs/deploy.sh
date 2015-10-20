@@ -8,8 +8,16 @@ deploy_err_no_recipes_path=3
 deploy_err_no_such_recipe=4
 deploy_err_no_such_subcommand=5
 
+
+# needs.sh
+
 needs_err_no_such_subcommand=10
 needs_not_implemented_yet=11
+
+
+# needs_apt.sh
+
+needs_apt_err_cant_install=20
 
 
 # tarfiles.sh
