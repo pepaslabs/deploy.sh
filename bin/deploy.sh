@@ -68,6 +68,7 @@ source "${deploysh_lib_dir}/colors.bash"
 source "${deploysh_lib_dir}/echo_step.bash"
 source "${deploysh_lib_dir}/conditionals.bash"
 source "${deploysh_lib_dir}/or_die.bash"
+source "${deploysh_lib_dir}/mktemp.bash"
 
 
 # usage functions
@@ -167,6 +168,7 @@ export -f is_root is_user is_linux is_darwin is_debian has_cmd files_differ \
 is_arm is_nslu2 is_olpc_xo1 is_pogoplug_v4 is_virtualbox
 export -f die_x_for_y_only die_recipe_for_x_only root_or_die user_or_die \
 linux_or_die darwin_or_die debian_or_die
+export -f mktempfile mktempdir
 
 
 # run the script
