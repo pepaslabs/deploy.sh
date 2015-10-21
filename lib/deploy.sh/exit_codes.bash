@@ -15,11 +15,6 @@ needs_err_no_such_subcommand=10
 needs_not_implemented_yet=11
 
 
-# needs_apt.sh
-
-needs_apt_err_cant_install=20
-
-
 # tarfiles.sh
 
 tarfiles_err_bad_usage=2

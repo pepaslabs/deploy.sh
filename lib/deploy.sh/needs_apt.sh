@@ -26,26 +26,23 @@ do
         echo_step "Installing ${color_yellow}${pkg}${color_off}"
         if is_root
         then
-            apt-get install "${pkg}" || \
-            (
-                exit_status=$?
-                echo_step_error "${color_yellow}apt-get install ${pkg}${color_off} exited status $exit_status."
-                exit $exit_status
-            )
+            cmd="apt-get install ${pkg}"
         else
             if has_cmd sudo
             then
-                sudo apt-get install "${pkg}" || \
-                (
-                    exit_status=$?
-                    echo_step_error "${color_yellow}apt-get install ${pkg}${color_off} exited status $exit_status."
-                    exit $exit_status
-                )
+                cmd="sudo apt-get install ${pkg}"
             else
-                echo_step_error "Can't install ${pkg} (sudo not found and you aren't root)."
-                exit $needs_apt_err_cant_install
+                cmd="su - -c \"apt-get install ${pkg}\""
             fi
         fi
+
+        eval "${cmd}" || \
+        (
+            exit_status=$?
+            echo_step_error "${color_yellow}apt-get install ${pkg}${color_off} exited status $exit_status."
+            exit $exit_status
+        )
+
         echo_step_ok "${color_yellow}${pkg}${color_off} installed."
     else
         echo_step "Skipping ${color_yellow}${pkg}${color_off} (already installed)."
