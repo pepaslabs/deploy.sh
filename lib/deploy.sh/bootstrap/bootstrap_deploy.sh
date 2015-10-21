@@ -82,7 +82,12 @@ then
     fi
 fi
 
-mkdir -p ~/bin
+if [ ! -e ~/bin ]
+then
+    mkdir -p ~/local/bin
+    ln -s ~/local/bin ~/bin
+fi
+
 if [ ! -e ~/bin/deploy.sh ]
 then
     echo " * Symlinking deploy.sh into ~/bin."
