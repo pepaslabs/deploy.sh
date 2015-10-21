@@ -3,6 +3,8 @@
 # bootstrap_deploy.sh: install deploy.sh and fetch your recipes from github.
 # see https://github.com/pepaslabs/deploy.sh
 
+# usage: bootstrap_deploy.sh [-y]
+
 
 # status codes:
 
@@ -13,6 +15,15 @@ err_git_not_installed=3
 # strict mode
 
 set -eu -o pipefail
+
+
+# parse command line args:
+
+assume_yes=0
+if [ "${1:-}" == "-y" ]
+then
+    assume_yes=1
+fi
 
 
 # functions
@@ -27,6 +38,12 @@ prompt_Yn()
     local message="${1}"
 
     echo -n " * PROMPT: ${message} [Y/n]: "
+
+    if [ "${assume_yes}" -eq 1 ]
+    then
+        echo " * (Assuming yes...)"
+        return 0
+    fi
 
     read yn
     case $yn in
