@@ -11,11 +11,17 @@
 
 # meta
 
-function die_for_x_only()
+function die_x_for_y_only()
 {
     local x="${1}"
-    echo_step_error "This recipe is for ${x} only."
+    local y="${2}"
+    echo_step_error "This ${x} is for ${y} only."
     exit 1
+}
+
+function die_recipe_for_x_only()
+{
+    die_x_for_y_only "recipe" "${1}"
 }
 
 
@@ -24,12 +30,12 @@ function die_for_x_only()
 
 function root_or_die()
 {
-    is_root || die_for_x_only "root"
+    is_root || die_recipe_for_x_only "root"
 }
 
 function user_or_die()
 {
-    is_user || die_for_x_only "regular users"
+    is_user || die_recipe_for_x_only "regular users"
 }
 
 
@@ -37,16 +43,16 @@ function user_or_die()
 
 function linux_or_die()
 {
-    is_linux || die_for_x_only "Linux"
+    is_linux || die_recipe_for_x_only "Linux"
 }
 
 function darwin_or_die()
 {
-    is_darwin || die_for_x_only "Darwin"
+    is_darwin || die_recipe_for_x_only "Darwin"
 }
 
 function debian_or_die()
 {
-    is_debian || die_for_x_only "Debian"
+    is_debian || die_recipe_for_x_only "Debian"
 }
 

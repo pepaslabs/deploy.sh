@@ -68,6 +68,7 @@ source "${deploysh_lib_dir}/colors.bash"
 source "${deploysh_lib_dir}/echo_step.bash"
 source "${deploysh_lib_dir}/conditionals.bash"
 source "${deploysh_lib_dir}/or_die.bash"
+source "${deploysh_lib_dir}/mktemp.bash"
 
 
 # usage functions
@@ -159,10 +160,15 @@ fi
 export PATH
 export deploysh_base_dir deploysh_bin_dir deploysh_lib_dir deploysh_etc_dir
 export -f bashx
-export color_off color_none color_black color_red color_green color_yellow color_blue color_purple color_cyan color_white
-export -f echo2 echo_step echo_step_color echo_step_ok echo_step_warning echo_step_error
-export -f is_root is_user is_linux is_darwin is_debian has_cmd files_differ
-export -f die_for_x_only root_or_die user_or_die linux_or_die darwin_or_die debian_or_die
+export color_off color_none color_black color_red color_green color_yellow \
+color_blue color_purple color_cyan color_white
+export -f echo2 echo_step echo_step_color echo_step_ok echo_step_warning \
+echo_step_error
+export -f is_root is_user is_linux is_darwin is_debian has_cmd files_differ \
+is_arm is_nslu2 is_olpc_xo1 is_pogoplug_v4 is_virtualbox
+export -f die_x_for_y_only die_recipe_for_x_only root_or_die user_or_die \
+linux_or_die darwin_or_die debian_or_die
+export -f mktempfile mktempdir
 
 
 # run the script

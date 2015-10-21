@@ -45,8 +45,8 @@ function is_debian()
 
 function has_cmd()
 {
-	local cmd="${1}"
-	which "${cmd}" >/dev/null 2>&1
+    local cmd="${1}"
+    which "${cmd}" >/dev/null 2>&1
 }
 
 
@@ -66,5 +66,44 @@ function files_differ()
     else
         return 0
     fi
+}
+
+
+# hardware-related functions
+
+function is_arm()
+{
+    uname -m | grep -q -i '^arm'
+}
+
+function is_nslu2()
+{
+    cat /proc/cpuinfo | grep -q '^Hardware.*Linksys NSLU2$'
+}
+
+function is_olpc_xo1()
+{
+    ( cat /proc/cpuinfo \
+      | grep -q 'Geode(TM) Integrated Processor by AMD PCS' ) \
+    && \
+    ( cat /proc/fb \
+      | grep 'Geode LX' )
+}
+
+function is_pogoplug_v4()
+{
+    cat /proc/cpuinfo | grep -q '^Hardware.*Pogoplug V4$'
+}
+
+function is_virtualbox()
+{
+    is_root || echo_step_component="conditionals.bash/is_virtualbox" die_x_for_y_only "function" "root"
+
+    if [ ! -e /usr/sbin/virt-what ]
+    then
+        needs.sh apt virt-what
+    fi
+    
+    virt-what | grep -q virtualbox
 }
 
