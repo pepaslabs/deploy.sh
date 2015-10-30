@@ -46,7 +46,7 @@ function is_debian()
 function has_cmd()
 {
     local cmd="${1}"
-    which "${cmd}" >/dev/null 2>&1
+    which -s "${cmd}"
 }
 
 
@@ -71,6 +71,16 @@ function files_differ()
 
 # hardware-related functions
 
+function is_x86()
+{
+    uname -m | grep -q -x -e 'i386' -e 'i586' -e 'i686'
+}
+
+function is_x86_64()
+{
+    [ "$( uname -m )" == "x86_64" ]
+}
+
 function is_arm()
 {
     uname -m | grep -q -i '^arm'
@@ -78,7 +88,7 @@ function is_arm()
 
 function is_nslu2()
 {
-    cat /proc/cpuinfo | grep -q '^Hardware.*Linksys NSLU2$'
+    cat /proc/cpuinfo | grep -q -x 'Hardware.*Linksys NSLU2'
 }
 
 function is_olpc_xo1()
@@ -86,13 +96,12 @@ function is_olpc_xo1()
     ( cat /proc/cpuinfo \
       | grep -q 'Geode(TM) Integrated Processor by AMD PCS' ) \
     && \
-    ( cat /proc/fb \
-      | grep 'Geode LX' )
+    ( cat /proc/fb | grep -q 'Geode LX' )
 }
 
 function is_pogoplug_v4()
 {
-    cat /proc/cpuinfo | grep -q '^Hardware.*Pogoplug V4$'
+    cat /proc/cpuinfo | grep -q -x 'Hardware.*Pogoplug V4'
 }
 
 function is_virtualbox()
