@@ -46,7 +46,7 @@ function is_debian()
 function has_cmd()
 {
     local cmd="${1}"
-    which -s "${cmd}"
+    which "${cmd}" >/dev/null 2>&1
 }
 
 
