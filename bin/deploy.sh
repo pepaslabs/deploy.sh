@@ -94,13 +94,9 @@ if [ -z "${1:-}" ]
 then
     usage_fatal
 fi
-subcommand="${1}"
+recipe="${1}"
 
-if [ -z "${2:-}" ]
-then
-    usage_fatal
-fi
-recipe="${2}"
+subcommand="${2:-install}"
 
 
 # resolve the recipe location
