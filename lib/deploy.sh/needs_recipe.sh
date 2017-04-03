@@ -2,4 +2,4 @@
 
 set -eu -o pipefail
 
-deploy.sh install "${1}"
+deploy.sh "${1}" install

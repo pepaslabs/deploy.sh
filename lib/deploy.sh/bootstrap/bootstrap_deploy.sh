@@ -135,11 +135,11 @@ fi
 
 # fetch the user's recipes
 
-install_myrecipes_command='deploy.sh install myrecipes'
+install_myrecipes_command='deploy.sh myrecipes install'
 if prompt_Yn "About to '${install_myrecipes_command}'.  Proceed?"
 then
     echo " * Running '${install_myrecipes_command}'."
-    bash ~/github/pepaslabs/deploy.sh/bin/deploy.sh install myrecipes
+    bash ~/github/pepaslabs/deploy.sh/bin/deploy.sh myrecipes install
 
     if [ "${remind_bashrc_at_end}" -eq 1 ]
     then
