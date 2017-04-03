@@ -69,6 +69,7 @@ source "${deploysh_lib_dir}/echo_step.bash"
 source "${deploysh_lib_dir}/conditionals.bash"
 source "${deploysh_lib_dir}/or_die.bash"
 source "${deploysh_lib_dir}/mktemp.bash"
+source "${deploysh_lib_dir}/utils.bash"
 
 
 # usage functions
@@ -165,6 +166,7 @@ is_x86 is_x86_64 is_arm is_nslu2 is_olpc_xo1 is_pogoplug_v4 is_virtualbox
 export -f die_x_for_y_only die_recipe_for_x_only root_or_die user_or_die \
 linux_or_die darwin_or_die debian_or_die
 export -f mktempfile mktempdir
+export -f cp_diff
 
 
 # run the script
