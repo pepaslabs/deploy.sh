@@ -76,7 +76,7 @@ source "${deploysh_lib_dir}/mktemp.bash"
 function usage()
 {
     cat << EOF
-Usage: ${_script_name} <subcommand> <recipe>
+Usage: ${_script_name} <recipe> <subcommand>
 EOF
 }
 
