@@ -95,22 +95,22 @@ if [ -z "${1:-}" ]
 then
     usage_fatal
 fi
-recipe="${1}"
 
-subcommand="${2:-install}"
+deploysh_recipe="${1}"
+deploysh_subcommand="${2:-install}"
 
 
 # resolve the recipe location
 
 function resolved_recipe_dir()
 {
-    find -L "${recipesd_dir}" -mindepth 2 -maxdepth 2 -type d -not -path '*/\.*' -name "${recipe}" | head -n1
+    find -L "${recipesd_dir}" -mindepth 2 -maxdepth 2 -type d -not -path '*/\.*' -name "${deploysh_recipe}" | head -n1
 }
 
 recipe_dir="$( resolved_recipe_dir )"
 if [ ! -e "${recipe_dir}" ]
 then
-    echo_step_error "No such recipe: ${color_yellow}${recipe}${color_off}."
+    echo_step_error "No such recipe: ${color_yellow}${deploysh_recipe}${color_off}."
     exit $deploy_err_no_such_recipe
 fi
 resolved_recipes_dir="$( basename "$( dirname "${recipe_dir}" )" )"
@@ -144,10 +144,10 @@ fi
 
 # resolve the subcommand script
 
-subcommand_fpath="${recipe_dir}/${subcommand}.sh"
+subcommand_fpath="${recipe_dir}/${deploysh_subcommand}.sh"
 if [ ! -e "${subcommand_fpath}" ]
 then
-    echo_step_error "No such subcommand: ${recipe}/${color_yellow}${subcommand}.sh${color_off}."
+    echo_step_error "No such subcommand: ${deploysh_recipe}/${color_yellow}${deploysh_subcommand}.sh${color_off}."
     exit $deploy_err_no_such_subcommand
 fi
 
@@ -168,17 +168,18 @@ linux_or_die darwin_or_die debian_or_die
 export -f mktempfile mktempdir
 export -f cp_diff
 
+export deploysh_recipe deploysh_subcommand
 
 # run the script
 
-echo_step "Running ${printed_recipes_dir}${color_yellow}${recipe}${color_off}/${subcommand}.sh."
+echo_step "Running ${printed_recipes_dir}${color_yellow}${deploysh_recipe}${color_off}/${deploysh_subcommand}.sh."
 cd "${recipe_dir}"
 bash_opts="-eu -o pipefail"
-echo_step_component="${recipe}/${subcommand}" bashx ${bash_opts} "${subcommand_fpath}" || \
+echo_step_component="${deploysh_recipe}/${deploysh_subcommand}" bashx ${bash_opts} "${subcommand_fpath}" || \
 (
     exit_status=$?
-    echo_step_error "${printed_recipes_dir}${color_yellow}${recipe}${color_off}/${subcommand}.sh exited status $exit_status."
+    echo_step_error "${printed_recipes_dir}${color_yellow}${deploysh_recipe}${color_off}/${deploysh_subcommand}.sh exited status $exit_status."
     exit $exit_status
 )
 
-echo_step_ok "${printed_recipes_dir}${color_yellow}${recipe}${color_off}/${subcommand}.sh succeeded."
+echo_step_ok "${printed_recipes_dir}${color_yellow}${deploysh_recipe}${color_off}/${deploysh_subcommand}.sh succeeded."
