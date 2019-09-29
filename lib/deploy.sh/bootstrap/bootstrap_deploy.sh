@@ -88,7 +88,7 @@ mkdir -p ~/github/pepaslabs
 cd ~/github/pepaslabs
 if [ ! -e "deploy.sh" ]
 then
-    git_clone_command='git clone https://github.com/pepaslabs/deploy.sh'
+    git_clone_command='git clone git@github.com:pepaslabs/deploy.sh'
     if prompt_Yn "About to clone github.com/pepaslabs/deploy.sh.  Proceed?"
     then
         echo " * Running '${git_clone_command}'."
@@ -124,7 +124,7 @@ then
         cat >> ~/.bashrc << EOF
 
 # added by deploy.sh
-export PATH="~/bin:${PATH}"
+export PATH='${HOME}/bin:${PATH}'
 EOF
         remind_bashrc_at_end=1
     else

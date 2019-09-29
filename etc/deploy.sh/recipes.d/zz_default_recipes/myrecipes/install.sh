@@ -6,7 +6,7 @@
 function you_are_on_your_own()
 {
     echo "Sorry, you're on your own."
-    echo "Symlink your recipes directory as display.sh/recipes"
+    echo "Symlink your recipes directory as deploy.sh/recipes"
     exit 1
 }
 
@@ -26,15 +26,14 @@ case $use_github in
         then
             echo "About to clone ${account}/${repo_name}"
             echo "  into ~/github/${account}/${repo_name}"
-            echo "  using 'git clone https://github.com/${account}/${repo_name}'"
+            echo "  using 'git clone git@github.com:${account}/${repo_name}'"
             read -p "Proceed? [Y/n]: " proceed
             case "${proceed}" in
                 y|Y|yes|Yes|YES|'')
 
                     mkdir -p ~/github/${account}
                     cd ~/github/${account}
-                    #git clone git@github.com:${account}/${repo_name}
-                    git clone https://github.com/${account}/${repo_name}
+                    git clone git@github.com:${account}/${repo_name}
 
                     ;;
                 *)
